@@ -44,7 +44,7 @@ exports.validarSql = function( usuario , clave ){
 //    
 //    return query;
     
-    var query = 'select activo  from usuarios_vpn where usuario='+"'"+usuario+"' && clave ='" +clave +"'";
+    var query = 'select activo  from usuarios where usuario='+"'"+usuario+"' && clave ='" +clave +"'" + "and acesso like '%V%'";
     return query;
 }
 
