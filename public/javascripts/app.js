@@ -27,15 +27,6 @@ app.factory("auth", function ($cookies, $cookieStore, $location, $http, $window)
         login: function (username, password) {
 
 
-            //            if(username == "prueba" && password == "123"){
-            ////                $window.location.href = "../templates/proceso.html";
-            //                $location.path("/proceso");
-            //                $cookies.username = username;
-            //            }
-            //            else{
-            //                $window.alert("error");
-            //            }
-
             $http.post('/validar', {
                 usuario: username,
                 clave: password
@@ -46,7 +37,10 @@ app.factory("auth", function ($cookies, $cookieStore, $location, $http, $window)
                 if (informacion.length === 0) {
                     $window.alert("ERROR : Su usuario o contraseña son incorrectos")
                 } else {
-                    if (informacion[0].activo === 'SI') {
+                    var letraAcesso = informacion[0].acceso.indexOf('V');
+                    console.log('V:', letraAcesso);
+                    
+                    if (letraAcesso > 0) {
 
                         $window.alert("MENSAJE: " + "\n" + "Bienvenido usuario -> " + username);
                         //creamos la cookie con el nombre que nos han pasado
@@ -56,6 +50,9 @@ app.factory("auth", function ($cookies, $cookieStore, $location, $http, $window)
                         //                       $window.location.href="../templates/proceso.html";
                         $location.path('/proceso');
                         console.log("ruta ", $window.location.pathname);
+                    }
+                    else{
+                        $window.alert('MENSAJE : Usuario -> '+ username + ' no posee los permisos suficientes para acceder a la aplicacion');
                     }
                 }
 
